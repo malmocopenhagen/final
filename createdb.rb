@@ -5,31 +5,56 @@ DB = Sequel.connect(connection_string)                                          
 #######################################################################################
 
 # Database schema - this should reflect your domain model
-DB.create_table! :events do
+DB.create_table! :users do
   primary_key :id
-  String :title
-  String :description, text: true
+  String :username
+  String :name
+  String :email
+  String :password
+  String :state
+end
+DB.create_table! :ballparks do
+  primary_key :id
+  String :name
+  String :team
+  String :city
+  String :state
+end
+DB.create_table! :games do
+  primary_key :id
+  foreign_key :ballpark_id
+  String :ballpark
   String :date
-  String :location
+  String :hometeam
+  String :roadteam
 end
 DB.create_table! :rsvps do
   primary_key :id
-  foreign_key :event_id
+  foreign_key :game_id
+  foreign_key :user_id
   Boolean :going
-  String :name
-  String :email
-  String :comments, text: true
 end
 
-# Insert initial (seed) data
-events_table = DB.from(:events)
+# Insert initial ballpark data
+ballparks_table = DB.from(:ballparks)
 
-events_table.insert(title: "Bacon Burger Taco Fest", 
-                    description: "Here we go again bacon burger taco fans, another Bacon Burger Taco Fest is here!",
-                    date: "June 21",
-                    location: "Kellogg Global Hub")
+ballparks_table.insert(name: "Tropicana Field", 
+                    team: "Tampa Bay Rays",
+                    city: "St Petersburg",
+                    state: "FL")
 
-events_table.insert(title: "Kaleapolooza", 
-                    description: "If you're into nutrition and vitamins and stuff, this is the event for you.",
-                    date: "July 4",
-                    location: "Nowhere")
+ballparks_table.insert(name: "Fenway Park", 
+                    team: "Boston Red Sox",
+                    city: "Boston",
+                    state: "MA")
+
+# Insert initial games data
+games_table = DB.from(:games)
+
+games_table.insert(ballpark: "Tropicana Field", 
+                    date: "09/12/2019",
+                    hometeam: "Tampa Bay Rays",
+                    roadteam: "Houston Astros")
+
+# Create users data
+users_table = DB.from(:users)

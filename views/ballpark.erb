@@ -1,0 +1,16 @@
+<div class="row">
+    <div class="col-sm-9">
+        <h2>
+            <i class="far fa-calendar-alt"></i>
+            <%= @ballpark[:team] %>
+        </h2>
+        <h1><%= @ballpark[:name] %></h1>
+        <p><%= @ballpark[:city] %>, <%= @ballpark[:state] %></p>
+
+        <% for game in @games %>
+            <div class="media">
+              <%= game[:roadteam] %>  
+            </div>
+        <% end %>
+    </div>
+</div>
