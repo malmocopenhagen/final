@@ -1,5 +1,107 @@
 <h1>Ballparks</h1>
 
 <% for ballpark in @ballparks %>
-    <p><a href="/ballparks/<%= ballpark[:id] %>"><%= ballpark[:name] %></a></p>
+    <p>
+    <a href="/ballparks/<%= ballpark[:id] %>"><%= ballpark[:name] %></a></p>
+
+<div class="row">
+    <div class="col-sm-2">
+    <img src="<%= ballpark[:path] %>">
+    </div>
+    <div class="col-sm-2">
+    <img src="">
+    </div>
+    <div class="col-sm-2">
+    <img src="">
+    </div>
+    <div class="col-sm-2">
+    <img src="">
+    </div>
+    <div class="col-sm-2">
+    <img src="">
+    </div>
+    <div class="col-sm-2">
+    <img src="">
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-2">
+    <img src="">
+    </div>
+    <div class="col-sm-2">
+    <img src="">
+    </div>
+    <div class="col-sm-2">
+    <img src="">
+    </div>
+    <div class="col-sm-2">
+    <img src="">
+    </div>
+    <div class="col-sm-2">
+    <img src="">
+    </div>
+    <div class="col-sm-2">
+    <img src="">
+    </div>
+</div>
+<div class="row">
+     <div class="col-sm-2">
+    <img src="">
+    </div>
+    <div class="col-sm-2">
+    <img src="">
+    </div>
+    <div class="col-sm-2">
+    <img src="">
+    </div>
+    <div class="col-sm-2">
+    <img src="">
+    </div>
+    <div class="col-sm-2">
+    <img src="">
+    </div>
+    <div class="col-sm-2">
+    <img src="">
+    </div>
+</div>
+<div class="row">
+     <div class="col-sm-2">
+    <img src="">
+    </div>
+    <div class="col-sm-2">
+    <img src="">
+    </div>
+    <div class="col-sm-2">
+    <img src="">
+    </div>
+    <div class="col-sm-2">
+    <img src="">
+    </div>
+    <div class="col-sm-2">
+    <img src="">
+    </div>
+    <div class="col-sm-2">
+    <img src="">
+    </div>
+</div>
+<div class="row">
+     <div class="col-sm-2">
+    <img src="">
+    </div>
+    <div class="col-sm-2">
+    <img src="">
+    </div>
+    <div class="col-sm-2">
+    <img src="">
+    </div>
+    <div class="col-sm-2">
+    <img src="">
+    </div>
+    <div class="col-sm-2">
+    <img src="">
+    </div>
+    <div class="col-sm-2">
+    <img src="">
+    </div>
+</div>
 <% end %>

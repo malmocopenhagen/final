@@ -19,6 +19,7 @@ DB.create_table! :ballparks do
   String :team
   String :city
   String :state
+  String :path
 end
 DB.create_table! :games do
   primary_key :id
@@ -41,12 +42,14 @@ ballparks_table = DB.from(:ballparks)
 ballparks_table.insert(name: "Tropicana Field", 
                     team: "Tampa Bay Rays",
                     city: "St Petersburg",
-                    state: "FL")
+                    state: "FL",
+                    path: "/images/tropicana_field.jfif")
 
 ballparks_table.insert(name: "Fenway Park", 
                     team: "Boston Red Sox",
                     city: "Boston",
-                    state: "MA")
+                    state: "MA",
+                    path: "/images/fenway_park.jfif")
 
 # Insert initial games data
 games_table = DB.from(:games)

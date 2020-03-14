@@ -173,7 +173,7 @@ post "/logins/create" do
         if BCrypt::Password.new(@user[:password]) == params["password"]
             # set encrypted cookie for logged in user
             session["user_id"] = @user[:id]
-            redirect "/"
+            redirect "/ballparks"
         else
             view "create_login_failed"
         end
