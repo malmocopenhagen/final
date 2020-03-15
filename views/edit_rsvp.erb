@@ -1,7 +1,3 @@
-<h2>
-    <i class="far fa-calendar-alt"></i>
-    <%= @game[:date] %>
-</h2>
 <h1>Edit RSVP for <%= @game[:roadteam] %> at <%= @game[:hometeam] %></h1>
 
 <form action="/rsvps/<%= @rsvp[:id] %>/update" method="post">

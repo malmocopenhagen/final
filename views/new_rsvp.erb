@@ -1,18 +1,11 @@
-<h2>
-    <i class="far fa-calendar-alt"></i>
-    <%= @game[:date] %>
-</h2>
-<h1>RSVP for <%= @game[:roadteam] %>, <%= @game[:date] %></h1>
-
-<form action="/ballparks/<%= @game[:id] %>/rsvps/create" method="post">
+<form action="/ballparks/<%= @ballpark[:id] %>/rsvps/create" method="post">
   <div class="form-group">
-    <label>Are you going?</label>
+    <label>Have you visited <%= @ballpark[:name]%>?</label>
     <select class="form-control" name="going">
       <option value="1">Yes</option>
       <option value="0">No</option>
     </select>
   </div>
-
   <div class="form-group">
     <label>Comments</label>
     <textarea class="form-control" rows="3" name="comments"></textarea>

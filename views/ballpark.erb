@@ -1,16 +1,33 @@
 <div class="row">
-    <div class="col-sm-9">
+    <div class="col-sm-6"> 
         <h2>
-            <i class="far fa-calendar-alt"></i>
-            <%= @ballpark[:team] %>
+            <center>
+            <img src=<%= @ballpark[:logo]%> width="300" height="300">
+            <h2>
+                <%= @ballpark[:team] %>
+            </h2>
+            </center>    
         </h2>
-        <h1><%= @ballpark[:name] %></h1>
-        <p><%= @ballpark[:city] %>, <%= @ballpark[:state] %></p>
-
-        <% for game in @games %>
-            <div class="media">
-              <%= game[:roadteam] %>  
-            </div>
+        <center>
+         <p class="mt-5">
+        <% if @current_user%>
+                <a href="/ballparks/<%= @ballpark[:id] %>/rsvps/new" class="btn btn-primary">Visit <%=@ballpark[:name]%></a>
+        <% else %>
+            <a href="/" class="btn btn-danger">Please sign in to record visit</a>
         <% end %>
+            </p>
+        </center>
     </div>
+
+    <div class="col-sm-6">
+        <h2>
+        <br>
+            <center>
+            <img src=<%= @ballpark[:path]%> width="480" height="270">
+             <h2><%= @ballpark[:name] %>, <%= @ballpark[:city] %>, <%= @ballpark[:state] %></h2>
+            </center>
+        </h2>
+
+        
+ </div>      
 </div>

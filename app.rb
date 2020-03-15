@@ -15,7 +15,6 @@ after { puts; }                                                                 
 #######################################################################################
 
 ballparks_table = DB.from(:ballparks)
-games_table = DB.from(:games)
 users_table = DB.from(:users)
 rsvps_table = DB.from(:rsvps)
 
@@ -37,6 +36,8 @@ get "/ballparks" do
     @ballparks = ballparks_table.all.to_a
     pp @ballparks
 
+    @visits = rsvps_table.where(user_id: @current_user[:id], going: true).count
+
     view "ballparks"
 end
 
@@ -48,47 +49,35 @@ get "/ballparks/:id" do
     @ballpark = ballparks_table.where(id: params[:id]).to_a[0]
     pp @ballpark
 
-    @games = games_table.where(ballpark_id: @ballpark[:id]).to_a
+    @rsvp = rsvps_table.where(ballpark_id: @ballpark[:id]).to_a
+    @going_count = rsvps_table.where(ballpark_id: @ballpark[:id], going: true).count
 
     view "ballpark"
 end
 
-# game details
-get "/games/:id" do
-    puts "params: #{params}"
-
-    @users_table = users_table
-    @game = game_table.where(id: params[:id]).to_a[0]
-    pp @game
-
-    @rsvps = rsvps_table.where(game_id: @game[:id]).to_a
-    @going_count = rsvps_table.where(game_id: @game[:id], going: true).count
-
-    view "game"
-end
-
 # display the rsvp form (aka "new")
-get "/games/:id/rsvps/new" do
+get "/ballparks/:id/rsvps/new" do
     puts "params: #{params}"
 
-    @game = games_table.where(id: params[:id]).to_a[0]
+    @ballpark = ballparks_table.where(id: params[:id]).to_a[0]
     view "new_rsvp"
 end
 
 # receive the submitted rsvp form (aka "create")
-post "/games/:id/rsvps/create" do
+post "/ballparks/:id/rsvps/create" do
     puts "params: #{params}"
 
-    # first find the event that rsvp'ing for
-    @game = games_table.where(id: params[:id]).to_a[0]
+    # first find the ballpark that rsvp'ing for
+    @ballpark = ballparks_table.where(id: params[:id]).to_a[0]
     # next we want to insert a row in the rsvps table with the rsvp form data
     rsvps_table.insert(
-        game_id: @game[:id],
+        ballpark_id: @ballpark[:id],
         user_id: session["user_id"],
-        going: params["going"]
+        going: params["going"],
+        comments: params["comments"]
     )
 
-    redirect "/games/#{@game[:id]}"
+    redirect "/ballparks/#{@ballpark[:id]}"
 end
 
 # display the rsvp form (aka "edit")
@@ -96,7 +85,7 @@ get "/rsvps/:id/edit" do
     puts "params: #{params}"
 
     @rsvp = rsvps_table.where(id: params["id"]).to_a[0]
-    @game = games_table.where(id: @rsvp[:game_id]).to_a[0]
+    @ballpark = ballparks_table.where(id: @rsvp[:ballpark_id]).to_a[0]
     view "edit_rsvp"
 end
 
@@ -107,14 +96,14 @@ post "rsvps/:id/update" do
     # find the rsvp to update
     @rsvp = rsvps_table.where(id: params["id"]).to_a[0]
     # find the rsvp's event
-    @game = gamess_table.where(id: @rsvp[:game_id]).to_a[0]
+    @ballpark = ballparks_table.where(id: @rsvp[:ballpark_id]).to_a[0]
 
     if @current_user && @current_user[:id] == @rsvp[:id]
         rsvps_table.where(id: params["id"]).update(
             going: params["going"]
         )
 
-        redirect "games/#{@game[:id]}"
+        redirect "ballparks/#{@ballpark[:id]}"
     else
         view "error"
     end
@@ -124,17 +113,12 @@ end
 get "rsvps/:id/destroy" do
     puts "params: #{params}"
 
-    rsvp = rsvps_table.where(id: params["id"]).to_a[0]
-    @game = games_table.where(id: rsvp[:game_id]).to_a[0]
+    @rsvp = rsvps_table.where(id: params["id"]).to_a[0]
+    @ballpark = ballparks_table.where(id: rsvp[:ballpark_id]).to_a[0]
 
     rsvps_table.where(id: params["id"]).delete
 
-    redirect "/games/#{@game[:id]}"
-end
-
-# display the signup form (aka "new")
-get "/users/new" do
-    view "new_user"
+    redirect "/ballparks/#{@ballpark[:id]}"
 end
 
 # receive the submitted signup form (aka "create")
@@ -152,13 +136,8 @@ post "/users/create" do
             password: BCrypt::Password.create(params["password"])
         )
 
-        redirect "/logins/new"
+        redirect "/"
     end
-end
-
-# display the login form (aka "new")
-get "/logins/new" do
-    view "new_login"
 end
 
 # receive the submitted login form (aka "create")
@@ -186,6 +165,6 @@ end
 get "/logout" do
     # remove encrypted cookie for logged out user
     session["user_id"] = nil
-    redirect "/logins/new"
+    redirect "/"
 end
 
