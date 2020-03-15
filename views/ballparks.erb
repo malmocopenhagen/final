@@ -1,107 +1,21 @@
-<h1>Ballparks</h1>
+<center>
+<h1>X of 30 Ballparks Visited!</h1>
+</center>
+<br>
 
+<div class="row">
 <% for ballpark in @ballparks %>
-    <p>
-    <a href="/ballparks/<%= ballpark[:id] %>"><%= ballpark[:name] %></a></p>
-
-<div class="row">
     <div class="col-sm-2">
-    <img src="<%= ballpark[:path] %>">
+    <a href="/ballparks/<%= ballpark[:id] %>">
+    <center>
+    <img src="<%=ballpark[:path]%>" width="160" height="90">
+    </center>
+    <center>
+    <font size="-1"><%= ballpark[:team] %>
+    </font size>
+    </center>
+    </a>
+    <br>
     </div>
-    <div class="col-sm-2">
-    <img src="">
-    </div>
-    <div class="col-sm-2">
-    <img src="">
-    </div>
-    <div class="col-sm-2">
-    <img src="">
-    </div>
-    <div class="col-sm-2">
-    <img src="">
-    </div>
-    <div class="col-sm-2">
-    <img src="">
-    </div>
+    <% end %>
 </div>
-<div class="row">
-    <div class="col-sm-2">
-    <img src="">
-    </div>
-    <div class="col-sm-2">
-    <img src="">
-    </div>
-    <div class="col-sm-2">
-    <img src="">
-    </div>
-    <div class="col-sm-2">
-    <img src="">
-    </div>
-    <div class="col-sm-2">
-    <img src="">
-    </div>
-    <div class="col-sm-2">
-    <img src="">
-    </div>
-</div>
-<div class="row">
-     <div class="col-sm-2">
-    <img src="">
-    </div>
-    <div class="col-sm-2">
-    <img src="">
-    </div>
-    <div class="col-sm-2">
-    <img src="">
-    </div>
-    <div class="col-sm-2">
-    <img src="">
-    </div>
-    <div class="col-sm-2">
-    <img src="">
-    </div>
-    <div class="col-sm-2">
-    <img src="">
-    </div>
-</div>
-<div class="row">
-     <div class="col-sm-2">
-    <img src="">
-    </div>
-    <div class="col-sm-2">
-    <img src="">
-    </div>
-    <div class="col-sm-2">
-    <img src="">
-    </div>
-    <div class="col-sm-2">
-    <img src="">
-    </div>
-    <div class="col-sm-2">
-    <img src="">
-    </div>
-    <div class="col-sm-2">
-    <img src="">
-    </div>
-</div>
-<div class="row">
-     <div class="col-sm-2">
-    <img src="">
-    </div>
-    <div class="col-sm-2">
-    <img src="">
-    </div>
-    <div class="col-sm-2">
-    <img src="">
-    </div>
-    <div class="col-sm-2">
-    <img src="">
-    </div>
-    <div class="col-sm-2">
-    <img src="">
-    </div>
-    <div class="col-sm-2">
-    <img src="">
-    </div>
-</div>
-<% end %>
