@@ -10,10 +10,14 @@
         </h2>
         <center>
          <p class="mt-5">
-        <% if @current_user%>
+        <% if @current_user && @visits == 1%>
+            <a href="" class="btn btn-primary">You have visited <%=@ballpark[:name]%></a>
+            <% else %>
+                 <% if @current_user %>
                 <a href="/ballparks/<%= @ballpark[:id] %>/rsvps/new" class="btn btn-primary">Visit <%=@ballpark[:name]%></a>
         <% else %>
             <a href="/" class="btn btn-danger">Please sign in to record visit</a>
+            <% end %>
         <% end %>
             </p>
         </center>
@@ -27,6 +31,23 @@
              <h2><%= @ballpark[:name] %>, <%= @ballpark[:city] %>, <%= @ballpark[:state] %></h2>
             </center>
         </h2>
+        <div class="media-body">
+        <center>
+        <h1>Visitors (<%= @going_count %>)</h1>
+        </center>
+        <% for rsvp in @rsvps %>
+                    <h5 class="mt-0">
+                    <%= @users_table.where(id: rsvp[:user_id]).to_a[0][:username] %>
+                    <small>
+                            <!-- only show these links if it's my rsvp -->
+                            <% if @current_user && @current_user[:id] == rsvp[:user_id] %>
+                                (<a href="/rsvps/<%= rsvp[:id] %>/edit">edit</a> | <a href="/rsvps/<%= rsvp[:id] %>/destroy">delete</a>)
+                            <% end %>
+                        </small>
+                    <h6><%= rsvp[:comments] %></h6>
+                    <%end%>
+                    </h5>
+            </div>  
 
         
  </div>      

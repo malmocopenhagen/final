@@ -4,7 +4,7 @@ require "sinatra/reloader" if development?                                      
 require "sequel"                                                                      #
 require "logger"                                                                      #
 require "twilio-ruby"                                                                 #
-require "bcrypt"                                                                      #
+require "bcrypt"                                                                    #
 connection_string = ENV['DATABASE_URL'] || "sqlite://#{Dir.pwd}/development.sqlite3"  #
 DB ||= Sequel.connect(connection_string)                                              #
 DB.loggers << Logger.new($stdout) unless DB.loggers.size > 0                          #
@@ -29,6 +29,13 @@ get "/" do
     view "home"
 end
 
+# homepage for new users to log in
+get "/home_new" do
+    puts "params: #{params}"
+
+    view "home_new"
+end
+
 # user homepage (aka "index")
 get "/ballparks" do
     puts "params: #{params}"
@@ -36,7 +43,12 @@ get "/ballparks" do
     @ballparks = ballparks_table.all.to_a
     pp @ballparks
 
+    @rsvps = rsvps_table
+
+    if @current_user
     @visits = rsvps_table.where(user_id: @current_user[:id], going: true).count
+    else @visits = 0
+    end
 
     view "ballparks"
 end
@@ -49,7 +61,7 @@ get "/ballparks/:id" do
     @ballpark = ballparks_table.where(id: params[:id]).to_a[0]
     pp @ballpark
 
-    @rsvp = rsvps_table.where(ballpark_id: @ballpark[:id]).to_a
+    @rsvps = rsvps_table.where(ballpark_id: @ballpark[:id]).to_a
     @going_count = rsvps_table.where(ballpark_id: @ballpark[:id], going: true).count
 
     view "ballpark"
@@ -90,7 +102,7 @@ get "/rsvps/:id/edit" do
 end
 
 # receive the submitted rsvp form (aka "update")
-post "rsvps/:id/update" do
+post "/rsvps/:id/update" do
     puts "params: #{params}"
 
     # find the rsvp to update
@@ -98,22 +110,23 @@ post "rsvps/:id/update" do
     # find the rsvp's event
     @ballpark = ballparks_table.where(id: @rsvp[:ballpark_id]).to_a[0]
 
-    if @current_user && @current_user[:id] == @rsvp[:id]
+    if @current_user && @current_user[:id] == @rsvp[:user_id]
         rsvps_table.where(id: params["id"]).update(
-            going: params["going"]
+            going: params["going"],
+            comments: params["comments"]
         )
 
-        redirect "ballparks/#{@ballpark[:id]}"
+        redirect "/ballparks/#{@ballpark[:id]}"
     else
-        view "error"
+        redirect "/ballparks/#{@ballpark[:id]}"
     end
 end
 
 # delete the rsvp (aka "destroy")
-get "rsvps/:id/destroy" do
+get "/rsvps/:id/destroy" do
     puts "params: #{params}"
 
-    @rsvp = rsvps_table.where(id: params["id"]).to_a[0]
+    rsvp = rsvps_table.where(id: params["id"]).to_a[0]
     @ballpark = ballparks_table.where(id: rsvp[:ballpark_id]).to_a[0]
 
     rsvps_table.where(id: params["id"]).delete
@@ -131,12 +144,14 @@ post "/users/create" do
         view "error"
     else
         users_table.insert(
+            username: params["username"],
             name: params["name"],
             email: params["email"],
+            favoriteteam: params["favoriteteam"],
             password: BCrypt::Password.create(params["password"])
         )
 
-        redirect "/"
+        redirect "/ballparks"
     end
 end
 

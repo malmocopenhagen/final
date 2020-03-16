@@ -1,5 +1,10 @@
 <center>
-<h1>X of 30 Ballparks Visited!</h1>
+<%if @current_user %>
+<h1><%=@visits%> of 30 Ballparks Visited!</h1>
+<% if @visits == 30%>
+<h1>Congratulations, you're a true fan!</h1>
+<% end %>
+<%end%>
 </center>
 <br>
 
@@ -12,8 +17,14 @@
     </center>
     <center>
     <font size="-1"><%= ballpark[:team] %>
-    </font size>
+    <%if @current_user %>
+    <% if @rsvps.where(ballpark_id: ballpark[:id], user_id: @current_user[:id], going: true).count == 1%>
+    <%end %>
+    <i class="fa fa-check"></i>
+    <%else%>
+    <%end%></font size>
     </center>
+    
     </a>
     <br>
     </div>
