@@ -8,12 +8,10 @@ DB = Sequel.connect(connection_string)                                          
 DB.create_table! :users do
   primary_key :id
   String :username
-  String :name
   String :email
   String :password
   String :favoriteteam
   String :phone
-  String :zipcode
 end
 DB.create_table! :ballparks do
   primary_key :id
@@ -276,8 +274,6 @@ ballparks_table.insert(name: "Nationals Park",
                     logo: "https://www.mlbstatic.com/team-logos/120.svg",
                     color: "#AB0003")
 
-# Create users data
+#Create initial tables
 users_table = DB.from(:users)
-
-# Create rsvps data
-rsvps_table = DB.from(:rsvps)
+rsvps_table = DB.from(:rsvps)                   

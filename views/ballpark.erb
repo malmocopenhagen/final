@@ -1,54 +1,68 @@
 <div class="row">
-    <div class="col-sm-6"> 
-        <h2>
-            <center>
-            <img src=<%= @ballpark[:logo]%> width="300" height="300">
-            <h2>
-                <%= @ballpark[:team] %>
-            </h2>
-            </center>    
-        </h2>
+    <div class="col-sm-6">
         <center>
-         <p class="mt-5">
-        <% if @current_user && @visits > 0%>
-            <a href="" class="btn btn-secondary">You have visited <%=@ballpark[:name]%></a>
+            <% if @current_user && @visits > 0%>
+                <button type="button" class="btn btn-secondary btn-block" disabled>You have visited <%=@ballpark[:name]%></button>
+                <% else %>
+                    <% if @current_user %>
+                    <a href="/ballparks/<%= @ballpark[:id] %>/rsvps/new" class="btn btn-primary btn-block">Visit <%=@ballpark[:name]%></a>
             <% else %>
-                 <% if @current_user %>
-                <a href="/ballparks/<%= @ballpark[:id] %>/rsvps/new" class="btn btn-primary">Visit <%=@ballpark[:name]%></a>
-        <% else %>
-            <a href="/" class="btn btn-danger">Please sign in to record visit</a>
+                <a href="/" class="btn btn-danger btn-block">Please sign in to record visit</a>
+                <% end %>
             <% end %>
-        <% end %>
-            </p>
         </center>
     </div>
-
     <div class="col-sm-6">
+        <center>
+            <% if @ballpark[:team] == @current_user[:favoriteteam]%>
+                <a href="/" class="btn btn-block" style="background-color: <%= @ballpark[:color]%>; color: white">Home of your <%= @ballpark[:team] %>!</a>
+                <% else %>
+                <a href="/" class="btn btn-block" style="background-color: <%= @ballpark[:color]%>; color: white">Home of the <%= @ballpark[:team] %>!</a>
+            <% end %>
+        </center>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-6">
         <h2>
-        <br>
             <center>
-            <img src=<%= @ballpark[:path]%> width="480" height="270">
-             <h2><%= @ballpark[:name] %>, <%= @ballpark[:city] %>, <%= @ballpark[:state] %></h2>
+                <img src=<%= @ballpark[:path]%> width="480" height="270">
+        <h2>
+            <%= @ballpark[:name] %>, <%= @ballpark[:city] %>, <%= @ballpark[:state] %>
+        </h2>
             </center>
         </h2>
-        <div class="media-body">
-        <center>
-        <h1>Visitors (<%= @going_count %>)</h1>
-        </center>
+            <center>
+                <iframe
+                    width="480"
+                    height="270"
+                    frameborder="0" style="border:0"
+                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCtovsQvkIUWlNqtYwXY87gEd4ZSmJEhMw
+                    &q=<%= @lat %>,<%= @long %>&zoom=8" allowfullscreen>
+                </iframe>
+    </div>
+    <div class="col-md-6"> 
+        <h2>
+            <center>
+                <img src=<%= @ballpark[:logo]%> width="270" height="270">
+            </center>    
+        </h2>
+            <center>
+        <h2>
+        Visitors (<%= @going_count %>)
+        </h2>
+            </center>
         <% for rsvp in @rsvps %>
                     <h5 class="mt-0">
                     <%= @users_table.where(id: rsvp[:user_id]).to_a[0][:username] %>
                     <small>
-                            <!-- only show these links if it's my rsvp -->
                             <% if @current_user && @current_user[:id] == rsvp[:user_id] %>
                                 (<a href="/rsvps/<%= rsvp[:id] %>/edit">edit</a> | <a href="/rsvps/<%= rsvp[:id] %>/destroy">delete</a>)
                             <% end %>
                         </small>
                     <h6><%= rsvp[:comments] %></h6>
                     <%end%>
-                    </h5>
-            </div>  
-
-        
- </div>      
-</div>
+                    </h5>   
+    </div>  
+    </div>

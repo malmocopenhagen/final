@@ -16,12 +16,6 @@ before { puts; puts "--------------- NEW REQUEST ---------------"; puts }       
 after { puts; }                                                                       #
 #######################################################################################
 
-#Twilio info
-account_sid = ENV["TWILIO_ACCOUNT_SID"]
-auth_token = ENV["TWILIO_AUTH_TOKEN"]
-
-client = Twilio::REST::Client.new(account_sid, auth_token)
-
 #Create databases
 ballparks_table = DB.from(:ballparks)
 users_table = DB.from(:users)
@@ -31,6 +25,12 @@ before do
     @current_user = users_table.where(id: session["user_id"]).to_a[0]
 end
 
+#Twilio info
+account_sid = ENV["TWILIO_ACCOUNT_SID"]
+auth_token = ENV["TWILIO_AUTH_TOKEN"]
+
+client = Twilio::REST::Client.new(account_sid, auth_token)
+
 # homepage (initial landing page)
 get "/" do
     puts "params: #{params}"    
@@ -38,11 +38,16 @@ get "/" do
     view "home"
 end
 
+# homepage for new users to login for first time
+get "/home_new" do
+    puts "params: #{params}"    
+
+    view "home_new"
+end
+
 # user homepage (aka "index")
 get "/ballparks" do
     puts "params: #{params}"
-
-    
 
     @ballparks = ballparks_table.all.to_a
     pp @ballparks
@@ -69,6 +74,10 @@ get "/ballparks/:id" do
     @visits = rsvps_table.where(user_id: @current_user[:id], ballpark_id: @ballpark[:id], going: true).count
     @rsvps = rsvps_table.where(ballpark_id: @ballpark[:id]).to_a
     @going_count = rsvps_table.where(ballpark_id: @ballpark[:id], going: true).count
+    location = Geocoder.search(@ballpark[:name])
+    @lat_long = location.first.coordinates
+    @lat = @lat_long[0]
+    @long = @lat_long[1]
 
     view "ballpark"
 end
@@ -115,7 +124,7 @@ post "/ballparks/:id/rsvps/create/complete" do
 # Send a congratulatory text message
         client.messages.create(
         from: "+12244073115", 
-        to: "<%= @current_user[:phone]",
+        to: "<%= @current_user[:phone]%>",
         body: "Congratulations on visiting all 30 MLB ballparks! You are a true fan!"
         )
 
@@ -175,15 +184,13 @@ post "/users/create" do
     else
         users_table.insert(
             username: params["username"],
-            name: params["name"],
             email: params["email"],
             favoriteteam: params["favoriteteam"],
             password: BCrypt::Password.create(params["password"],
-            zipcode: params["zipcode"],
             phone: params["phone"])
         )
 
-        redirect "/ballparks"
+        redirect "/home_new"
     end
 end
 
