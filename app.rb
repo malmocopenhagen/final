@@ -39,10 +39,10 @@ get "/" do
 end
 
 # homepage for new users to login for first time
-get "/home_new" do
+get "/homenew" do
     puts "params: #{params}"    
 
-    view "home_new"
+    view "homenew"
 end
 
 # user homepage (aka "index")
