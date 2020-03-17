@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <%if @visits == 29%>
 <form action="/ballparks/<%= @ballpark[:id] %>/rsvps/create/complete" method="post">
 <label>I visited <%= @ballpark[:name]%>!</label>
@@ -9,8 +8,6 @@
   <button type="submit" name="going" value="1" class="btn btn-primary">Submit</button>
 </form>
 <%else%>
-=======
->>>>>>> 78d910bdb53f598bf8af33db523b5b4e9686b322
 <form action="/ballparks/<%= @ballpark[:id] %>/rsvps/create" method="post">
     <label>I visited <%= @ballpark[:name]%>!</label>
   <div class="form-group">
@@ -18,9 +15,5 @@
     <textarea class="form-control" rows="3" name="comments"></textarea>
   </div>
   <button type="submit" name="going" value="1" class="btn btn-primary">Submit</button>
-<<<<<<< HEAD
 </form>
 <%end%>
-=======
-</form>
->>>>>>> 78d910bdb53f598bf8af33db523b5b4e9686b322

@@ -1,7 +1,6 @@
 <div class="row">
     <div class="col-sm-6">
         <center>
-<<<<<<< HEAD
             <% if @current_user && @visits > 0%>
                 <button type="button" class="btn btn-secondary btn-block" disabled>You have visited <%=@ballpark[:name]%></button>
                 <% else %>
@@ -11,19 +10,6 @@
                 <a href="/" class="btn btn-danger btn-block">Please sign in to record visit</a>
                 <% end %>
             <% end %>
-=======
-         <p class="mt-5">
-        <% if @current_user && @visits == 1%>
-            <a href="" class="btn btn-primary">You have visited <%=@ballpark[:name]%></a>
-            <% else %>
-                 <% if @current_user %>
-                <a href="/ballparks/<%= @ballpark[:id] %>/rsvps/new" class="btn btn-primary">Visit <%=@ballpark[:name]%></a>
-        <% else %>
-            <a href="/" class="btn btn-danger">Please sign in to record visit</a>
-            <% end %>
-        <% end %>
-            </p>
->>>>>>> 78d910bdb53f598bf8af33db523b5b4e9686b322
         </center>
     </div>
     <div class="col-sm-6">
