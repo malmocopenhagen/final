@@ -14,7 +14,7 @@
     </div>
     <div class="col-sm-6">
         <center>
-            <% if @ballpark[:team] == @current_user[:favoriteteam]%>
+            <% if @ballpark[:team] == @current_user_team[:name]%>
                 <a href="/" class="btn btn-block" style="background-color: <%= @ballpark[:color]%>; color: white">Home of your <%= @ballpark[:team] %>!</a>
                 <% else %>
                 <a href="/" class="btn btn-block" style="background-color: <%= @ballpark[:color]%>; color: white">Home of the <%= @ballpark[:team] %>!</a>

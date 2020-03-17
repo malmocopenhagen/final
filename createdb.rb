@@ -82,7 +82,7 @@ ballparks_table.insert(name: "Guaranteed Rate Field",
                     logo: "https://www.mlbstatic.com/team-logos/145.svg",
                     color: "#C4CED4")
 
-ballparks_table.insert(name: "Great American Ballpark", 
+ballparks_table.insert(name: "Great American Ball Park", 
                     team: "Cincinnati Reds",
                     city: "Cincinnati",
                     state: "OH",

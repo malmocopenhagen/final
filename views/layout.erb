@@ -34,7 +34,7 @@ width="30" height="20">
             <ul class="navbar-nav ml-auto">
               <% if @current_user %>
                     <li class="navbar-text" style="color: white">
-                        Logged in as <%= @current_user[:username] %>
+                        Logged in as <%= @current_user[:username] %><% img src="@current_user_team[:logo]" width="20" height="20">
                     </li>
                     <li class="nav-item">
                         <a href="/logout" class="nav-link" style="color: white">Logout</a>

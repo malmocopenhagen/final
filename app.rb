@@ -23,6 +23,7 @@ rsvps_table = DB.from(:rsvps)
 
 before do
     @current_user = users_table.where(id: session["user_id"]).to_a[0]
+    @current_user_team = ballparks_table.where(team: @current_user[:favoriteteam]).to_a[0]
 end
 
 #Twilio info
