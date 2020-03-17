@@ -94,7 +94,7 @@ end
 post "/ballparks/:id/rsvps/create" do
     puts "params: #{params}"
 
-    # first find the ballpark that rsvp'ing for
+    # first find the ballpark that rsvping for
     @ballpark = ballparks_table.where(id: params[:id]).to_a[0]
     # next we want to insert a row in the rsvps table with the rsvp form data
     rsvps_table.insert(
