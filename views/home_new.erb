@@ -7,6 +7,9 @@
     </div>
 
  <div class="col-md-6">
+ % if @current_user %>
+ <button type="submit" href="/ballparks" class="btn btn-primary">Return to Ballparks</button>
+ <%else%>
  <form action="/logins/create" method="post">
   <label><font size="+3">Existing Users</font></label>
   <div class="form-group">
@@ -17,5 +20,6 @@
   </div>
   <button type="submit" class="btn btn-primary">Sign In</button>
 </form>
+<% end %>
 </div>
 </div>
