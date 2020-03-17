@@ -19,6 +19,7 @@ after { puts; }                                                                 
 #Twilio info
 account_sid = ENV["TWILIO_ACCOUNT_SID"]
 auth_token = ENV["TWILIO_AUTH_TOKEN"]
+twilio_number = ENV["TWILIO_NUMBER"]
 
 client = Twilio::REST::Client.new(account_sid, auth_token)
 
@@ -70,7 +71,7 @@ get "/ballparks/:id" do
     @ballpark = ballparks_table.where(id: params[:id]).to_a[0]
     pp @ballpark
 
-    @visits = rsvps_table.where(user_id: @current_user[:id], ballpark_id: @ballpark[:id], going: true).count
+    @visits = [rsvps_table.where(user_id: @current_user[:id], ballpark_id: @ballpark[:id], going: true).count, 30].min
     @rsvps = rsvps_table.where(ballpark_id: @ballpark[:id]).to_a
     @going_count = rsvps_table.where(ballpark_id: @ballpark[:id], going: true).count
     location = Geocoder.search(@ballpark[:name])
@@ -104,7 +105,7 @@ post "/ballparks/:id/rsvps/create" do
         comments: params["comments"]
     )
 
-    redirect "/ballparks/#{@ballpark[:id]}"
+    redirect "/ballparks"
 end
 
 # receive the submitted rsvp form (aka "create") and send completion text
@@ -121,13 +122,17 @@ post "/ballparks/:id/rsvps/create/complete" do
         comments: params["comments"]
     )
 # Send a congratulatory text message
-        client.messages.create(
-        from: "+12244073115", 
-        to: "<%= @current_user[:phone]%>",
+puts  account_sid
+puts auth_token
+puts twilio_number 
+
+client.messages.create(
+        from: '+12244073115',
+        to: "#{@current_user[:phone]}",
         body: "Congratulations on visiting all 30 MLB ballparks! You are a true fan!"
         )
 
-    redirect "/ballparks/#{@ballpark[:id]}"
+    redirect "/ballparks"
 end
 
 # display the rsvp form (aka "edit")
