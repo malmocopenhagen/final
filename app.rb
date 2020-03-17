@@ -56,7 +56,6 @@ get "/ballparks" do
 
     if @current_user
     @visits = rsvps_table.where(user_id: @current_user[:id], going: true).count
-    @color = ballparks_table.where(team: @current_user[:favoriteteam])[:color]
     else @visits = 0
     end
 
