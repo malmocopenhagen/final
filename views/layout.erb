@@ -22,13 +22,7 @@
   </head>
   <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color:
-    <%if @current_user %>
-    <%= ballparks_table.where(team: @current_user[:favoriteteam]).to_a[0][:color]%>
-    <%else %>
-    white
-    <%end%>
-    ">"
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #000089">
         <div class="container">
     <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a6/Major_League_Baseball_logo.svg/1200px-Major_League_Baseball_logo.svg.png"
 width="30" height="20">
@@ -40,7 +34,7 @@ width="30" height="20">
             <ul class="navbar-nav ml-auto">
               <% if @current_user %>
                     <li class="navbar-text" style="color: white">
-                        Logged in as <%= @current_user[:username] %><% img src="@current_user_team[:logo]" width="20" height="20">
+                        Logged in as <%= @current_user[:username] %>
                     </li>
                     <li class="nav-item">
                         <a href="/logout" class="nav-link" style="color: white">Logout</a>

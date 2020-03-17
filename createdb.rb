@@ -11,10 +11,7 @@ DB.create_table! :users do
   String :email
   String :password
   String :favoriteteam
-<<<<<<< HEAD
   String :phone
-=======
->>>>>>> 78d910bdb53f598bf8af33db523b5b4e9686b322
 end
 DB.create_table! :ballparks do
   primary_key :id

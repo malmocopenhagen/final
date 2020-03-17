@@ -1,14 +1,12 @@
 # Set up for the application and database. DO NOT CHANGE. #############################
 require "sinatra"                                                                     #
 require "sinatra/reloader" if development?                                            #
-
+require "geocoder"                                                                    #
 require "sequel"                                                                      #
 require "logger"                                                                      #
-require "geocoder"                                                                    #
 require "twilio-ruby"                                                                 #
-
 require "bcrypt"                                                                      #
-
+                                                                                      #
 connection_string = ENV['DATABASE_URL'] || "sqlite://#{Dir.pwd}/development.sqlite3"  #
 DB ||= Sequel.connect(connection_string)                                              #
 DB.loggers << Logger.new($stdout) unless DB.loggers.size > 0                          #
@@ -18,6 +16,12 @@ before { puts; puts "--------------- NEW REQUEST ---------------"; puts }       
 after { puts; }                                                                       #
 #######################################################################################
 
+#Twilio info
+account_sid = ENV["TWILIO_ACCOUNT_SID"]
+auth_token = ENV["TWILIO_AUTH_TOKEN"]
+
+client = Twilio::REST::Client.new(account_sid, auth_token)
+
 #Create databases
 ballparks_table = DB.from(:ballparks)
 users_table = DB.from(:users)
@@ -25,14 +29,7 @@ rsvps_table = DB.from(:rsvps)
 
 before do
     @current_user = users_table.where(id: session["user_id"]).to_a[0]
-    @current_user_team = ballparks_table.where(team: @current_user[:favoriteteam]).to_a[0]
 end
-
-#Twilio info
-account_sid = ENV["TWILIO_ACCOUNT_SID"]
-auth_token = ENV["TWILIO_AUTH_TOKEN"]
-
-client = Twilio::REST::Client.new(account_sid, auth_token)
 
 # homepage (initial landing page)
 get "/" do
@@ -41,22 +38,14 @@ get "/" do
     view "home"
 end
 
-
 # homepage for new users to login for first time
 get "/home_new" do
-    
-    puts "params: #{params}"\
-    
-
-
-
-
+    puts "params: #{params}"    
 
     view "home_new"
 end
 
 # user homepage (aka "index")
-    
 get "/ballparks" do
     puts "params: #{params}"
 
@@ -81,9 +70,7 @@ get "/ballparks/:id" do
     @ballpark = ballparks_table.where(id: params[:id]).to_a[0]
     pp @ballpark
 
-    
     @visits = rsvps_table.where(user_id: @current_user[:id], ballpark_id: @ballpark[:id], going: true).count
-    
     @rsvps = rsvps_table.where(ballpark_id: @ballpark[:id]).to_a
     @going_count = rsvps_table.where(ballpark_id: @ballpark[:id], going: true).count
     location = Geocoder.search(@ballpark[:name])
@@ -195,19 +182,14 @@ post "/users/create" do
         view "error"
     else
         users_table.insert(
-            
-        
-        username: params["username"],
+            username: params["username"],
             email: params["email"],
             favoriteteam: params["favoriteteam"],
             password: BCrypt::Password.create(params["password"],
             phone: params["phone"])
         )
 
-        
-        
-        redirect "/home_new"
-    
+        redirect "/homenew"
     end
 end
 

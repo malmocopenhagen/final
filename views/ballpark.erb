@@ -14,7 +14,7 @@
     </div>
     <div class="col-sm-6">
         <center>
-            <% if @ballpark[:team] == @current_user_team[:name]%>
+            <% if @ballpark[:team] == @current_user[:favoriteteam]%>
                 <a href="/" class="btn btn-block" style="background-color: <%= @ballpark[:color]%>; color: white">Home of your <%= @ballpark[:team] %>!</a>
                 <% else %>
                 <a href="/" class="btn btn-block" style="background-color: <%= @ballpark[:color]%>; color: white">Home of the <%= @ballpark[:team] %>!</a>
@@ -33,7 +33,6 @@
         </h2>
             </center>
         </h2>
-<<<<<<< HEAD
             <center>
                 <iframe
                     width="480"
@@ -54,35 +53,16 @@
         Visitors (<%= @going_count %>)
         </h2>
             </center>
-=======
-        <div class="media-body">
-        <center>
-        <h1>Visitors (<%= @going_count %>)</h1>
-        </center>
->>>>>>> 78d910bdb53f598bf8af33db523b5b4e9686b322
         <% for rsvp in @rsvps %>
                     <h5 class="mt-0">
                     <%= @users_table.where(id: rsvp[:user_id]).to_a[0][:username] %>
                     <small>
-<<<<<<< HEAD
-=======
-                            <!-- only show these links if it's my rsvp -->
->>>>>>> 78d910bdb53f598bf8af33db523b5b4e9686b322
                             <% if @current_user && @current_user[:id] == rsvp[:user_id] %>
                                 (<a href="/rsvps/<%= rsvp[:id] %>/edit">edit</a> | <a href="/rsvps/<%= rsvp[:id] %>/destroy">delete</a>)
                             <% end %>
                         </small>
                     <h6><%= rsvp[:comments] %></h6>
                     <%end%>
-<<<<<<< HEAD
                     </h5>   
     </div>  
     </div>
-=======
-                    </h5>
-            </div>  
-
-        
- </div>      
-</div>
->>>>>>> 78d910bdb53f598bf8af33db523b5b4e9686b322
