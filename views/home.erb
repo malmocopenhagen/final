@@ -1,4 +1,9 @@
 <div class="row">
+<center>
+<h1>How many ballparks have you visited?</h1>
+</center>
+</div>
+<div class="row">
     <div class="col-md-6">
 <center>
 <br>
@@ -8,6 +13,7 @@
 
  <div class="col-md-6">
  <% if @current_user %>
+ <p><a href="/ballparks" class="btn btn-primary">Return to Ballparks</a></p>
  <%else%>
  <form action="/logins/create" method="post">
   <label><font size="+3">Existing Users</font></label>
