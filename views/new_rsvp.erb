@@ -1,14 +1,19 @@
-<form action="/ballparks/<%= @ballpark[:id] %>/rsvps/create" method="post">
-  <div class="form-group">
-    <label>Have you visited <%= @ballpark[:name]%>?</label>
-    <select class="form-control" name="going">
-      <option value="1">Yes</option>
-      <option value="0">No</option>
-    </select>
-  </div>
+<%if @visits == 29%>
+<form action="/ballparks/<%= @ballpark[:id] %>/rsvps/create/complete" method="post">
+<label>I visited <%= @ballpark[:name]%>!</label>
   <div class="form-group">
     <label>Comments</label>
     <textarea class="form-control" rows="3" name="comments"></textarea>
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" name="going" value="1" class="btn btn-primary">Submit</button>
 </form>
+<%else%>
+<form action="/ballparks/<%= @ballpark[:id] %>/rsvps/create" method="post">
+    <label>I visited <%= @ballpark[:name]%>!</label>
+  <div class="form-group">
+    <label>Comments</label>
+    <textarea class="form-control" rows="3" name="comments"></textarea>
+  </div>
+  <button type="submit" name="going" value="1" class="btn btn-primary">Submit</button>
+</form>
+<%end%>

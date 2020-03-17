@@ -1,7 +1,8 @@
 <div class="row">
     <div class="col-md-6">
 <center>
-    <img src="https://i.imgur.com/XBGwj7e.png" width="435" height="610">
+<br>
+    <img src="https://i.imgur.com/XBGwj7e.png" width="479" height="671">
 </center>
     </div>
 
@@ -9,31 +10,37 @@
  <form action="/logins/create" method="post">
   <label><font size="+3">Existing Users</font></label>
   <div class="form-group">
-    <input type="email" class="form-control" placeholder="Email Address" name="email">
+    <input type="email" class="form-control" placeholder="Email Address" name="email" required>
   </div>
   <div class="form-group">
-    <input type="password" class="form-control" placeholder="Password" name="password">
+    <input type="password" class="form-control" placeholder="Password" name="password" required>
   </div>
   <button type="submit" class="btn btn-primary">Sign In</button>
 </form>
 <br>
 <form action="/users/create" method="post">
 <label><font size="+3">New Users</font></label>
-  <div class="form-group">
-    <input type="text" class="form-control" placeholder="Username" name="username">
+    <div class="form-group">
+    <input type="email" class="form-control" placeholder="Email Address" name="email" required>
   </div>
    <div class="form-group">
-    <input type="password" class="form-control" placeholder="Password" name="password">
+    <input type="password" class="form-control" placeholder="Password" name="password" required>
+  </div>
+<div class="form-group">
+    <input type="text" class="form-control" placeholder="Username" name="username" required>
   </div>
   <div class="form-group">
-    <input type="email" class="form-control" placeholder="Email Address" name="email">
+    <input type="text" class="form-control" placeholder="Name" name="name" required>
   </div>
-    <div class="form-group">
-    <input type="text" class="form-control" placeholder="Name" name="name">
+  <div class="form-group">
+    <input type="text" class="form-control" placeholder="Zipcode" name="zipcode" pattern="[0-9]{5}" required>
   </div>
+  <div class="form-group">
+    <input type="tel" class="form-control" placeholder="Phone Number: +1xxxxxxxxxx" name="phone" pattern="+1[0-9]{10}" required>
+  </div> 
   <label>Favorite Team</label>
   <div class="form-group">
-         <select class="form-control" placeholder="Favorite Team" name="favoriteteam">
+         <select class="form-control" placeholder="Favorite Team" name="favoriteteam" required>
         <option value="1">Arizona Diamondbacks</option>
         <option value="2">Atlanta Braves</option>
         <option value="3">Baltimore Orioles</option>
