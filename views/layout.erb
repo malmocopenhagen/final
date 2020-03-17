@@ -30,15 +30,6 @@ width="30" height="20">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="/ballparks" style="color: white">Home</a>
-                </li>
-                 <% if @current_user %>
-                <li class="nav-item">
-                    <span><form action="/news">
-                    <input type="text" name="location">
-                    <button type="submit">Set Location</submit>
-                     </form></span>
-                </li>
-                <%end%>
             </ul>
             <ul class="navbar-nav ml-auto">
               <% if @current_user %>
