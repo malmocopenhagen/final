@@ -8,7 +8,7 @@
 
  <div class="col-md-6">
  <% if @current_user %>
- <button type="submit" href="/ballparks" class="btn btn-primary">Return to Ballparks</button>
+ <a href="/ballparks" class="btn btn-primary">Return to Ballparks</a>
  <%else%>
  <form action="/logins/create" method="post">
   <label><font size="+3">Existing Users</font></label>
