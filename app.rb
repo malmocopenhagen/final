@@ -184,11 +184,10 @@ post "/users/create" do
         users_table.insert(
             username: params["username"],
             email: params["email"],
+            phone: params["phone"],
             favoriteteam: params["favoriteteam"],
-            password: BCrypt::Password.create(params["password"],
-            phone: params["phone"])
-        )
-
+            password: BCrypt::Password.create(params["password"]
+        ))
         redirect "/homenew"
     end
 end
@@ -212,6 +211,12 @@ post "/logins/create" do
     else
         view "create_login_failed"
     end
+end
+
+# user profile page
+
+get "/user_profile" do
+    view "user_profile"
 end
 
 # logout user

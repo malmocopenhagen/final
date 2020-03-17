@@ -10,8 +10,8 @@ DB.create_table! :users do
   String :username
   String :email
   String :password
-  String :favoriteteam
   String :phone
+  String :favoriteteam
 end
 DB.create_table! :ballparks do
   primary_key :id
