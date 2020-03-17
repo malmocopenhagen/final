@@ -15,22 +15,21 @@
 <div class="row">
 <% for ballpark in @ballparks %>
     <div class="col-sm-2">
-    <a href="/ballparks/<%= ballpark[:id] %>">
-    <center>
-    <img src="<%=ballpark[:path]%>" width="160" height="90">
-    </center>
-    <center>
-    <font size="-1"><%= ballpark[:team] %>
-    <%if @current_user %>
-        <% if @rsvps.where(ballpark_id: ballpark[:id], user_id: @current_user[:id], going: true).count == 1%>
-    <i class="fa fa-check"></i>
-    <%end %>
-    <%else%>
-    <%end%></font size>
-    </center>
-    
-    </a>
-    <br>
+        <a href="/ballparks/<%= ballpark[:id] %>">
+        <center>
+            <img src="<%=ballpark[:path]%>" width="160" height="90">
+        </center>
+        <center>
+            <font size="-1"><%= ballpark[:team] %>
+        <%if @current_user %>
+            <% if @rsvps.where(ballpark_id: ballpark[:id], user_id: @current_user[:id], going: true).count == 1%>
+                <i class="fa fa-check"></i>
+            <%end %>
+        <%else%>
+        <%end%></font size>
+        </center>  
+        </a>
+        <br>
     </div>
-    <% end %>
+<% end %>
 </div>

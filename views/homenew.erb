@@ -1,21 +1,28 @@
 <div class="row">
 <div class="col-md-12">
+ <% if @current_user %>
+ <center>
+  <a href="/ballparks" type="submit" class="btn btn-primary">Take me (back) to the Ballparks...</a>
+ </center>
+  <%else%>
 <center>
 <h1>How many ballparks have you visited?</h1>
 </center>
 </div>
+<%end%>
 </div>
 <div class="row">
     <div class="col-md-6">
+    <% if @current_user %>
+    <% else %>
 <center>
 <br>
     <img src="https://i.imgur.com/XBGwj7e.png" width="479" height="671">
 </center>
     </div>
-
+<% end %>
  <div class="col-md-6">
  <% if @current_user %>
- <p><a href="/ballparks" class="btn btn-primary">Return to Ballparks</a></p>
  <%else%>
  <form action="/logins/create" method="post">
   <label><font size="+3">Existing Users</font></label>
