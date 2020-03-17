@@ -5,8 +5,12 @@ require "geocoder"                                                              
 require "sequel"                                                                      #
 require "logger"                                                                      #
 require "twilio-ruby"                                                                 #
+<<<<<<< HEAD
 require "bcrypt"                                                                      #
                                                                                       #
+=======
+require "bcrypt"                                                                    #
+>>>>>>> 78d910bdb53f598bf8af33db523b5b4e9686b322
 connection_string = ENV['DATABASE_URL'] || "sqlite://#{Dir.pwd}/development.sqlite3"  #
 DB ||= Sequel.connect(connection_string)                                              #
 DB.loggers << Logger.new($stdout) unless DB.loggers.size > 0                          #
@@ -39,9 +43,15 @@ get "/" do
     view "home"
 end
 
+<<<<<<< HEAD
 # homepage for new users to login for first time
 get "/home_new" do
     puts "params: #{params}"    
+=======
+# homepage for new users to log in
+get "/home_new" do
+    puts "params: #{params}"
+>>>>>>> 78d910bdb53f598bf8af33db523b5b4e9686b322
 
     view "home_new"
 end
@@ -71,7 +81,10 @@ get "/ballparks/:id" do
     @ballpark = ballparks_table.where(id: params[:id]).to_a[0]
     pp @ballpark
 
+<<<<<<< HEAD
     @visits = rsvps_table.where(user_id: @current_user[:id], ballpark_id: @ballpark[:id], going: true).count
+=======
+>>>>>>> 78d910bdb53f598bf8af33db523b5b4e9686b322
     @rsvps = rsvps_table.where(ballpark_id: @ballpark[:id]).to_a
     @going_count = rsvps_table.where(ballpark_id: @ballpark[:id], going: true).count
     location = Geocoder.search(@ballpark[:name])
@@ -184,6 +197,7 @@ post "/users/create" do
     else
         users_table.insert(
             username: params["username"],
+<<<<<<< HEAD
             email: params["email"],
             favoriteteam: params["favoriteteam"],
             password: BCrypt::Password.create(params["password"],
@@ -191,6 +205,15 @@ post "/users/create" do
         )
 
         redirect "/home_new"
+=======
+            name: params["name"],
+            email: params["email"],
+            favoriteteam: params["favoriteteam"],
+            password: BCrypt::Password.create(params["password"])
+        )
+
+        redirect "/ballparks"
+>>>>>>> 78d910bdb53f598bf8af33db523b5b4e9686b322
     end
 end
 

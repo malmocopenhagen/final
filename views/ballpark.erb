@@ -1,6 +1,7 @@
 <div class="row">
     <div class="col-sm-6">
         <center>
+<<<<<<< HEAD
             <% if @current_user && @visits > 0%>
                 <button type="button" class="btn btn-secondary btn-block" disabled>You have visited <%=@ballpark[:name]%></button>
                 <% else %>
@@ -10,6 +11,19 @@
                 <a href="/" class="btn btn-danger btn-block">Please sign in to record visit</a>
                 <% end %>
             <% end %>
+=======
+         <p class="mt-5">
+        <% if @current_user && @visits == 1%>
+            <a href="" class="btn btn-primary">You have visited <%=@ballpark[:name]%></a>
+            <% else %>
+                 <% if @current_user %>
+                <a href="/ballparks/<%= @ballpark[:id] %>/rsvps/new" class="btn btn-primary">Visit <%=@ballpark[:name]%></a>
+        <% else %>
+            <a href="/" class="btn btn-danger">Please sign in to record visit</a>
+            <% end %>
+        <% end %>
+            </p>
+>>>>>>> 78d910bdb53f598bf8af33db523b5b4e9686b322
         </center>
     </div>
     <div class="col-sm-6">
@@ -33,6 +47,7 @@
         </h2>
             </center>
         </h2>
+<<<<<<< HEAD
             <center>
                 <iframe
                     width="480"
@@ -53,16 +68,35 @@
         Visitors (<%= @going_count %>)
         </h2>
             </center>
+=======
+        <div class="media-body">
+        <center>
+        <h1>Visitors (<%= @going_count %>)</h1>
+        </center>
+>>>>>>> 78d910bdb53f598bf8af33db523b5b4e9686b322
         <% for rsvp in @rsvps %>
                     <h5 class="mt-0">
                     <%= @users_table.where(id: rsvp[:user_id]).to_a[0][:username] %>
                     <small>
+<<<<<<< HEAD
+=======
+                            <!-- only show these links if it's my rsvp -->
+>>>>>>> 78d910bdb53f598bf8af33db523b5b4e9686b322
                             <% if @current_user && @current_user[:id] == rsvp[:user_id] %>
                                 (<a href="/rsvps/<%= rsvp[:id] %>/edit">edit</a> | <a href="/rsvps/<%= rsvp[:id] %>/destroy">delete</a>)
                             <% end %>
                         </small>
                     <h6><%= rsvp[:comments] %></h6>
                     <%end%>
+<<<<<<< HEAD
                     </h5>   
     </div>  
     </div>
+=======
+                    </h5>
+            </div>  
+
+        
+ </div>      
+</div>
+>>>>>>> 78d910bdb53f598bf8af33db523b5b4e9686b322
